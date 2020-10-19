@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <div class="title-container">
-            <h2 v-if="this.currentLocationDetails != null" class="location-title">Your current location is; <br/> {{ this.currentLocationDetails.addresses[0].address.municipality }},  {{ this.currentLocationDetails.addresses[0].address.postalCode }}.</h2>
+            <h2 v-if="this.currentLocationDetails != null" class="location-title"> {{ this.currentLocationDetails.addresses[0].address.municipality }},  {{ this.currentLocationDetails.addresses[0].address.postalCode }}, {{ this.currentLocationDetails.addresses[0].address.country }}.</h2>
         </div>
     
         <div class="weather-container">
@@ -22,12 +22,12 @@
         <ul v-if="this.currentLocationWeather != null" :refresh='refresh' class="dates-list">
             <li v-for="(item, index) in this.currentLocationWeather.daily" :key="item.dt" class="dropdown-weather-text">
                 <button class="date-button" v-on:click="toggleIsVisible(index)"><a href="#weather-description"> {{ convertDateFromTimeStamp(item.dt) }}</a></button>
-                <div class="daily-weather-details">
-                <h2 v-if="isVisible[index] === true"> morning temp: {{ Math.round(item.temp.morn) }}°C</h2>
-                <h2 v-if="isVisible[index] === true"> day temp: {{ Math.round(item.temp.day) }}°C</h2>
-                <h2 v-if="isVisible[index] === true"> night temp: {{ Math.round(item.temp.night) }}°C</h2>
-                <h2 v-if="isVisible[index] === true" id="weather-description"> weather: {{ item.weather[0].description }}</h2>
-                </div>
+                
+                <!-- <h2 v-if="isVisible[index] === true"> {{ Math.round(item.temp.day) }}°C</h2> -->
+                <h2 v-if="isVisible[index] === true" id="weather-description"> {{ item.weather[0].description }} & {{ Math.round(item.temp.day) }}°C</h2>
+                <h2 v-if="isVisible[index] === true"> temp am: {{ Math.round(item.temp.morn) }}°C</h2>
+                <h2 v-if="isVisible[index] === true"> temp pm: {{ Math.round(item.temp.night) }}°C</h2>
+            
             </li>
         </ul>
         
@@ -116,40 +116,45 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bubbler+One&family=Prompt:wght@100;400;700&family=Ubuntu+Mono:wght@400;700&display=swap');
 
 .app-container {
     background-color:#f1f1f1;
     padding-bottom: 10px;
     min-height: 100vh;
+    padding: 5px;
 }
 .title-container {
     border: solid 1px black;
     border-radius: 20px;
-    width: fit-content;
+    width: 350px;
     margin-left: auto;
-    margin-right: auto;   
+    margin-right: auto; 
+    background-color: #00ff9d;  
 }
 .location-title {
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 28px;
+    font-size: 35px;
     margin: 10px;
     padding: 20px;
+    color: #5f5f5f;
 }
 .weather-container {
     border: solid 1px black;
     border-radius: 20px;
-    width: fit-content;
-    margin-top: 30px;
+    width: 350px;
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto; 
     background-color: #90fdfd; 
+    box-shadow: 10px 10px 5px grey;
 }
 .current-weather{
     font-family: 'Ubuntu Mono', monospace;
     font-size: 36px;
     margin: 0px;
     padding: 20px 10px 5px 10px;
+    color: #5f5f5f;
 }
 .image-temp-grid {
     display: grid;
@@ -157,14 +162,16 @@ export default {
     align-items: center;
 }
 .image-fit{
-    height: 175px;
-    margin-left: auto;
-    margin-right: auto; 
+    height: 180px;
+    /* margin-left: auto;
+    margin-right: auto;  */
 }
 .temperature {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 60px;
-    padding: 20px;
+    font-family: 'Prompt', sans-serif;
+    font-weight: 400;
+    color: #5f5f5f;
+    font-size: 70px;
+    padding: 10px;
     margin: 0;
 }
 .other-weather-details-container {
@@ -174,36 +181,52 @@ export default {
     width: 350px;
     margin-left: auto;
     margin-right: auto; 
-    padding: 15px;
+    padding: 15px 0px;
     margin-top: 20px;
+    background-color: white;
+    
+}
+.other-weather-details-container h2{
+    font-family: 'Ubuntu Mono', monospace;
+    margin: 0;
     
 }
 .dates-list{
     list-style-type: none;
     margin: 0px;
     padding: 0px;
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    flex: wrap;
+    justify-content: center; */
 }
 
 .daily-forecast-title {
     font-family: 'Ubuntu Mono', monospace;
 }
 .date-button {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 16px;
+    /* font-family: 'Ubuntu Mono', monospace;
+    font-size: 16px; */
     padding: 10px 12px;
-    margin: 10px;
+    margin-top: 0px;
     border: solid 1px black;
     border-radius: 20px;
-    background-color: aqua;
+    background-color: #90fdfd;
+    box-shadow: 10px 10px 5px grey;
+    
+}
+.date-button a {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
     
 }
 .dropdown-weather-text {
     font-family: 'Ubuntu Mono', monospace;
     font-size: 12px;
     color: black;
-    padding: 10px;
+    padding: 5px;
+    /* background-color: aqua; */
 }
 
 
