@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1 class="title">Hello World!</h1>
+    <!-- <h1 class="title">Hello World!</h1> -->
     <current-location-weather />
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   /* clear: both; */
-  background-color:bisque;
+  background-color:#f1f1f1;
   padding-top: 10px;
 }
 body{
