@@ -1,5 +1,6 @@
 <template>
-    <div class="app-container">
+
+    <div class="app-container" :style="{ backgroundImage: 'url(' + require('@/assets/cloudsky.jpg') + ')' }">
         <div class="title-container">
             <h2 v-if="this.currentLocationDetails != null" class="location-title"> 
                 {{ this.currentLocationDetails.addresses[0].address.municipality }}  
@@ -37,7 +38,7 @@
             
             </li>
         </ul>
-        
+        </div> 
     </div>
 </template>
 
@@ -132,9 +133,9 @@ export default {
 
 .app-container {
     background-color:#f1f1f1;
-    padding-bottom: 10px;
     min-height: 100vh;
-    padding: 5px;
+    margin: 0;
+    padding: 20px;
 }
 .title-container {
     border: solid 1px black;
@@ -167,7 +168,7 @@ export default {
     margin-left: auto;
     margin-right: auto; 
     background-color: #90fdfd; 
-    box-shadow: 10px 10px 5px grey;
+    /* box-shadow: 10px 10px 5px grey; */
     padding-bottom: 20px;
 }
 .current-weather{
@@ -182,6 +183,7 @@ export default {
     display: grid;
     grid-template-columns: 50% 50%;
     align-items: center;
+    margin-right: 20px;
 }
 .image-fit{
     height: 180px;
@@ -190,9 +192,12 @@ export default {
     font-family: 'Prompt', sans-serif;
     font-weight: 600;
     color: #5f5f5f;
-    font-size: 60px;
-    padding-right: 20px;
-    margin: 0;
+    font-size: 50px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: solid 1px black;
+    border-radius: 50%;
+    margin: 20px
 }
 .wind-speed {
     font-family: 'Ubuntu Mono', monospace;
@@ -236,7 +241,7 @@ export default {
     border: solid 1px black;
     border-radius: 20px;
     background-color: #90fdfd;
-    box-shadow: 10px 10px 5px grey;
+    /* box-shadow: 10px 10px 5px grey; */
     
 }
 .date-button a {
