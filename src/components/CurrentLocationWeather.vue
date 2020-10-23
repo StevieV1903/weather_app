@@ -39,7 +39,6 @@
             </li>
         </ul>
         </div> 
-    </div>
 </template>
 
 <script>
@@ -168,7 +167,6 @@ export default {
     margin-left: auto;
     margin-right: auto; 
     background-color: #90fdfd; 
-    /* box-shadow: 10px 10px 5px grey; */
     padding-bottom: 20px;
 }
 .current-weather{
@@ -187,17 +185,23 @@ export default {
 }
 .image-fit{
     height: 180px;
+    /* border: solid 1px black;
+    border-radius: 50%;
+    margin: 20px;
+    box-shadow: 10px 10px 5px grey; */
 }
 .temperature {
     font-family: 'Prompt', sans-serif;
     font-weight: 600;
-    color: #5f5f5f;
+    color: #001135;
+    text-shadow: 2px 2px 5px rgb(255, 173, 173);
     font-size: 50px;
     padding: 15px;
     background-color: #ffffff;
     border: solid 1px black;
     border-radius: 50%;
-    margin: 20px
+    margin: 20px;
+    box-shadow: 10px 10px 5px grey;
 }
 .wind-speed {
     font-family: 'Ubuntu Mono', monospace;
@@ -254,7 +258,7 @@ export default {
 .dropdown-weather-text {
     font-family: 'Ubuntu Mono', monospace;
     font-size: 12px;
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 5px;
     margin: 0px;
     /* background-color: aqua; */
