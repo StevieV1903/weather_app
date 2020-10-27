@@ -231,9 +231,9 @@ export default {
     list-style-type: none;
     margin: 0px;
     padding: 0px;
-    /* display: flex;
+    display: flex;
     flex: wrap;
-    justify-content: center; */
+    justify-content: center;
 }
 
 .daily-forecast-title {
