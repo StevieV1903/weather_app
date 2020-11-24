@@ -1,38 +1,45 @@
 <template>
 
-    <div class="app-container" :style="{ backgroundImage: 'url(' + require('@/assets/cloudsky.jpg') + ')' }">
+    <div class="app-container">
         <div class="title-container">
             <h2 v-if="this.currentLocationDetails != null" class="location-title"> 
                 {{ this.currentLocationDetails.addresses[0].address.municipality }}  
                 ({{ this.currentLocationDetails.addresses[0].address.postalCode }})</h2>
             <h3 v-if="this.currentLocationDetails != null" class="location-detail">
                 {{ this.currentLocationDetails.addresses[0].address.countrySecondarySubdivision}},
-                {{ this.currentLocationDetails.addresses[0].address.country }}.
+                {{ this.currentLocationDetails.addresses[0].address.country }}
 
             </h3>
         </div>
     
         <div class="weather-container">
-            <h2 v-if="this.currentLocationWeather != null" class="current-weather"> {{ this.currentLocationWeather.current.weather[0].description }}</h2>
+            <h2 v-if="this.currentLocationWeather != null" class="current-weather">current weather {{ this.currentLocationWeather.current.weather[0].description }}</h2>
             <div class="image-temp-grid">
             <img :src=this.weatherIcon class="image-fit">
         
             <h2 v-if="this.currentLocationWeather != null" class="temperature">{{ Math.round(this.currentLocationWeather.current.temp)  }}°C</h2>
             </div>
-            <h2 v-if="this.currentLocationWeather != null" class="wind-speed"> wind speed {{ this.getWindMilesPerHour(this.currentLocationWeather.current.wind_speed)  }}mph</h2>
-            <h2 v-if="this.currentLocationWeather != null" class="wind-speed"> cloud cover {{ (this.currentLocationWeather.current.clouds)  }}%</h2>
-        </div>
+            <!-- <div class="other-weather-details-container"> -->
+            <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> windspeed: {{ this.getWindMilesPerHour(this.currentLocationWeather.current.wind_speed)  }}mph</h3>
+            <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> cloud cover: {{ (this.currentLocationWeather.current.clouds)  }}%</h3>
+            <div class="other-weather-details-container">
+            <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> 
+                <img src="../assets/sunrise.png" class="grid-image">
+             {{ this.convertTimeFromTimeStamp(this.currentLocationWeather.current.sunrise) }}</h3>
+            <h3 v-if="this.currentLocationWeather != null" class="wind-speed">
+                <img src="../assets/sunset.png" class="grid-image"> {{ this.convertTimeFromTimeStamp(this.currentLocationWeather.current.sunset) }}</h3>
+            </div>
+            </div>
         
-    <div class="other-weather-details-container">
-        <h2 v-if="this.currentLocationWeather != null"> Sunrise: {{ this.convertTimeFromTimeStamp(this.currentLocationWeather.current.sunrise) }}</h2>
-        <h2 v-if="this.currentLocationWeather != null"> Sunset: {{ this.convertTimeFromTimeStamp(this.currentLocationWeather.current.sunset) }}</h2>
-    </div>
+    <!-- <div class="other-weather-details-container">
+        
+    </div> -->
         <h2 class="daily-forecast-title">Click on a date below for daily forecast:</h2>
         <ul v-if="this.currentLocationWeather != null" :refresh='refresh' class="dates-list">
             <li v-for="(item, index) in this.currentLocationWeather.daily" :key="item.dt" class="dropdown-weather-text">
                 <button class="date-button" v-on:click="toggleIsVisible(index)"><a href="#weather-description"> {{ convertDateFromTimeStamp(item.dt) }}</a></button>
     
-                <h2 v-if="isVisible[index] === true" id="weather-description"> {{ item.weather[0].description }} & {{ Math.round(item.temp.day) }}°C</h2>
+                <h2 v-if="isVisible[index] === true" id="weather-description"> {{ item.weather[0].description }} ({{ Math.round(item.temp.day) }}°C)</h2>
                 <h2 v-if="isVisible[index] === true"> temp am: {{ Math.round(item.temp.morn) }}°C</h2>
                 <h2 v-if="isVisible[index] === true"> temp pm: {{ Math.round(item.temp.night) }}°C</h2>
             
@@ -137,41 +144,38 @@ export default {
     padding: 20px;
 }
 .title-container {
-    border: solid 1px black;
+    border: solid 4px #5f5f5f;
+    padding: 15px;
     border-radius: 20px;
-    width: 350px;
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto; 
-    background-color: #00ff9d;
+    background-color: #aefadd;
 }
 .location-title {
-    font-family: 'Ubuntu Mono', monospace;
     font-size: 35px;
     margin: 0px;
     padding: 5px 10px;
     color: #5f5f5f;
 }
 .location-detail {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 24px;
-    margin: 10px;
-    padding: 5px 5px;
+    font-size: 26px;
+    padding: 5px 10px;
     color: #5f5f5f;
     margin: 0;
 }
 .weather-container {
-    border: solid 1px black;
+    border: solid 4px #5f5f5f;
     border-radius: 20px;
-    width: 350px;
+    max-width: 350px;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto; 
-    background-color: #90fdfd; 
-    padding-bottom: 20px;
+    background-color: #00ffff; 
+    padding: 10px 20px;
 }
 .current-weather{
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 36px;
+    font-size: 30px;
     margin: 0px;
     padding: 20px 10px 5px 10px;
     color: #5f5f5f;
@@ -185,39 +189,36 @@ export default {
 }
 .image-fit{
     height: 180px;
-    /* border: solid 1px black;
-    border-radius: 50%;
-    margin: 20px;
-    box-shadow: 10px 10px 5px grey; */
 }
 .temperature {
     font-family: 'Prompt', sans-serif;
-    font-weight: 600;
-    color: #001135;
-    text-shadow: 2px 2px 5px rgb(255, 173, 173);
+    color: #5f5f5f;
+    /* text-shadow: 2px 2px 5px rgb(255, 173, 173); */
     font-size: 50px;
-    padding: 15px;
+    padding: 20px;
     background-color: #ffffff;
-    border: solid 1px black;
+    border: solid 1px #5f5f5f;
     border-radius: 50%;
     margin: 20px;
-    box-shadow: 10px 10px 5px grey;
+    box-shadow: 5px 5px 5px grey;
 }
 .wind-speed {
-    font-family: 'Ubuntu Mono', monospace;
     font-size: 28px;
     margin: 0px;
     padding: 0px 5px 5px 5px;
     color: #5f5f5f;
 }
 .other-weather-details-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
     font-family: 'Ubuntu Mono', monospace;
     border: solid 1px black;
     border-radius: 20px;
-    width: 350px;
+    /* width: 350px; */
     margin-left: auto;
     margin-right: auto; 
-    padding: 15px 0px;
+    padding: 10px 0px;
     margin-top: 20px;
     background-color: white;
     
@@ -258,10 +259,13 @@ export default {
 .dropdown-weather-text {
     font-family: 'Ubuntu Mono', monospace;
     font-size: 12px;
-    color: rgb(255, 255, 255);
+    color: #5f5f5f;
     padding: 5px;
     margin: 0px;
     /* background-color: aqua; */
+}
+.grid-image {
+    height: 150px;
 }
 
 
