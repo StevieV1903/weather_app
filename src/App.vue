@@ -1,8 +1,7 @@
 <template>
   <div id="app">
      <h1 class="title">Worldwide Weather</h1>
-    <h3>Welcome to the only weather app you'll ever need!
-    Find out the current weather consitions in any country around the world!</h3>
+    <h3 className="header-subtext">Find out the current weather conditions in any country around the world!</h3>
 
     <current-location-weather />
     
@@ -27,13 +26,21 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
   clear: both;
-  background-color:#f1f1f1;
-  padding-top: 10px;
+  background-color:#c1c8e4;
+  padding-top: 25px;
 }
 body{
   margin: 0px !important;
+
+}
+#app > h1 {
+  margin: 0;
+}
+#app > h3 {
+  margin: 0;
+  padding: 0 20px
 }
 
 </style>

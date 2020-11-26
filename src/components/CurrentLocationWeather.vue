@@ -13,14 +13,14 @@
         </div>
     
         <div class="weather-container">
-            <h2 v-if="this.currentLocationWeather != null" class="current-weather">current weather {{ this.currentLocationWeather.current.weather[0].description }}</h2>
+            <h2 v-if="this.currentLocationWeather != null" class="current-weather">current weather: <br/> {{ this.currentLocationWeather.current.weather[0].description }}</h2>
             <div class="image-temp-grid">
             <img :src=this.weatherIcon class="image-fit">
         
             <h2 v-if="this.currentLocationWeather != null" class="temperature">{{ Math.round(this.currentLocationWeather.current.temp)  }}°C</h2>
             </div>
-            <!-- <div class="other-weather-details-container"> -->
-            <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> windspeed: {{ this.getWindMilesPerHour(this.currentLocationWeather.current.wind_speed)  }}mph</h3>
+            
+            <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> wind-speed: {{ this.getWindMilesPerHour(this.currentLocationWeather.current.wind_speed)  }}mph</h3>
             <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> cloud cover: {{ (this.currentLocationWeather.current.clouds)  }}%</h3>
             <div class="other-weather-details-container">
             <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> 
@@ -31,9 +31,6 @@
             </div>
             </div>
         
-    <!-- <div class="other-weather-details-container">
-        
-    </div> -->
         <h2 class="daily-forecast-title">Click on a date below for daily forecast:</h2>
         <ul v-if="this.currentLocationWeather != null" :refresh='refresh' class="dates-list">
             <li v-for="(item, index) in this.currentLocationWeather.daily" :key="item.dt" class="dropdown-weather-text">
@@ -91,7 +88,7 @@ export default {
 
         convertTimeFromTimeStamp(path) {
             const date = new Date(path * 1000)
-            const time = date.toLocaleTimeString("en-US", {hour: "2-digit", minute: "2-digit"})
+            const time = date.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"})
             return time
         },
         convertDateFromTimeStamp(path) {
@@ -136,91 +133,96 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Bubbler+One&family=Prompt:wght@100;400;700&family=Ubuntu+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
 .app-container {
-    background-color:#f1f1f1;
+    background-color: #c1c8e4;
     min-height: 100vh;
     margin: 0;
     padding: 20px;
 }
 .title-container {
-    border: solid 4px #5f5f5f;
+    border: solid 4px #8860d0;
     padding: 15px;
     border-radius: 20px;
     max-width: 400px;
     margin-left: auto;
     margin-right: auto; 
-    background-color: #aefadd;
+    background-color: #b9e9fb;
 }
 .location-title {
-    font-size: 35px;
+    font-size: 30px;
     margin: 0px;
-    padding: 5px 10px;
-    color: #5f5f5f;
+    padding: 5px 5px;
+    color: black;
 }
 .location-detail {
-    font-size: 26px;
-    padding: 5px 10px;
-    color: #5f5f5f;
+    font-size: 20px;
+    padding: 0px 10px;
+    color: black;
     margin: 0;
 }
 .weather-container {
-    border: solid 4px #5f5f5f;
+    border: solid 4px #8860d0;
     border-radius: 20px;
     max-width: 350px;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto; 
-    background-color: #00ffff; 
+    background-color: #b9e9fb; 
     padding: 10px 20px;
 }
 .current-weather{
-    font-size: 30px;
+    font-size: 26px;
     margin: 0px;
-    padding: 20px 10px 5px 10px;
-    color: #5f5f5f;
+    padding: 5px 10px 5px 10px;
+    color: black;
     text-transform: capitalize;
 }
 .image-temp-grid {
     display: grid;
     grid-template-columns: 50% 50%;
     align-items: center;
-    margin-right: 20px;
 }
 .image-fit{
     height: 180px;
 }
 .temperature {
-    font-family: 'Prompt', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     color: #5f5f5f;
     /* text-shadow: 2px 2px 5px rgb(255, 173, 173); */
-    font-size: 50px;
+    font-size: 60px;
     padding: 20px;
     background-color: #ffffff;
-    border: solid 1px #5f5f5f;
+    border: solid 5px #8860d0;
     border-radius: 50%;
     margin: 20px;
     box-shadow: 5px 5px 5px grey;
 }
+@media screen and (max-width: 450px) {
+  .image-fit {
+      height: 140px;
+  }
+  .temperature {
+    font-size: 45px;
+    border-radius: 30px;
+    margin: 10px;
+}
+}
+
 .wind-speed {
-    font-size: 28px;
+    font-size: 26px;
     margin: 0px;
     padding: 0px 5px 5px 5px;
-    color: #5f5f5f;
+    color: black;
 }
 .other-weather-details-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    font-family: 'Ubuntu Mono', monospace;
-    border: solid 1px black;
-    border-radius: 20px;
-    /* width: 350px; */
     margin-left: auto;
     margin-right: auto; 
-    padding: 10px 0px;
-    margin-top: 20px;
-    background-color: white;
+    background-color: #b9e9fb;
     
 }
 .other-weather-details-container h2{
@@ -237,15 +239,22 @@ export default {
     justify-content: center;
 }
 
+@media screen and (max-width: 950px) {
+  .dates-list {
+    display: block;
+  }
+}
+
 .daily-forecast-title {
     font-family: 'Ubuntu Mono', monospace;
+    font-size: 20px;
 }
 .date-button {
     padding: 10px 12px;
     margin-top: 0px;
     border: solid 1px black;
     border-radius: 20px;
-    background-color: #90fdfd;
+    background-color: #b9e9fb;
     /* box-shadow: 10px 10px 5px grey; */
     
 }
@@ -259,15 +268,28 @@ export default {
 .dropdown-weather-text {
     font-family: 'Ubuntu Mono', monospace;
     font-size: 12px;
-    color: #5f5f5f;
+    color: black;
     padding: 5px;
     margin: 0px;
     /* background-color: aqua; */
 }
 .grid-image {
-    height: 150px;
+    height: 125px;
+    /* object-fit: fill; */
 }
 
+@media screen and (max-width: 365px) {
+.grid-image {
+    height: 90px;
+}
+}
+
+@media screen and (max-width: 325px) {
+.temperature {
+    margin: 5px;
+
+}
+}
 
 
 </style>
