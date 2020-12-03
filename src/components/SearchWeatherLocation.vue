@@ -127,20 +127,14 @@ select, input {
   border-radius: 8px;
   background-color: #fff;
 }
-/* input {
-  font-size: 18px;
-  font-family: 'Bubbler One', sans-serif;
-  font-weight: bold;
-  color: #444;
-  padding: 6px;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  margin: 0;
-  margin-left: auto;
-  margin-right: auto;
-  border: 4px solid #8860d0;
-  border-radius: 8px;
-  background-color: #fff;
-} */
+
+
+/* RESPONSIVE RULES:  */
+@media screen and (max-width: 600px) {
+  .form-container {
+        padding: 20px; 
+        box-sizing: border-box;
+}
+
+}
 </style>

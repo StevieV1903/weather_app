@@ -8,9 +8,13 @@
                     <option v-for="(location, index) in this.searchLocation.results" v-bind:value="location" v-bind:key="index">{{ location.address.freeformAddress }}</option>
                 </select>
                 </div>
+
+                    <div class="loading-icon" v-if="this.currentLocationWeather === null">
+                        <cube-spin/>
+                    </div>
         
-        <div class="title-container">
-            <h2 v-if="this.searchLocation != null" class="location-detail"> {{ this.searchLocationName }}</h2>
+        <div v-if="this.currentLocationWeather != null" class="title-container">
+                <h2 v-if="this.searchLocation != null" class="location-title"> {{ this.searchLocationName }}</h2>
                 
             <h2 v-if="this.currentLocationDetails != null" class="location-title"> 
                 {{ this.currentLocationDetails.addresses[0].address.municipality }}  
@@ -18,18 +22,17 @@
             <h3 v-if="this.currentLocationDetails != null" class="location-detail">
                 {{ this.currentLocationDetails.addresses[0].address.countrySecondarySubdivision}},
                 {{ this.currentLocationDetails.addresses[0].address.country }}
-
             </h3>
         </div>
-    <div class="weather-wrapper">
-        <div class="weather-container">
-            <h2 class="current-weather">Current Weather:</h2>
-            <h2 v-if="this.currentLocationWeather != null" class="weather"> {{ this.currentLocationWeather.current.weather[0].description }}</h2>
-                <div class="image-temp-grid">
-                    <img :src=this.weatherIcon class="image-fit">
+            <div v-if="this.currentLocationWeather != null" class="weather-wrapper">
+                <div class="weather-container">
+                    <h2 class="current-weather">Current Weather:</h2>
+                    <h2 v-if="this.currentLocationWeather != null" class="weather"> {{ this.currentLocationWeather.current.weather[0].description }}</h2>
+                        <div class="image-temp-grid">
+                        <img :src=this.weatherIcon class="image-fit">
                 
-                    <h2 v-if="this.currentLocationWeather != null" class="temperature">{{ Math.round(this.currentLocationWeather.current.temp)  }}°C</h2>
-                </div>
+                        <h2 v-if="this.currentLocationWeather != null" class="temperature">{{ Math.round(this.currentLocationWeather.current.temp)  }}°C</h2>
+                        </div>
             
             <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> wind-speed: {{ this.getWindMilesPerHour(this.currentLocationWeather.current.wind_speed)  }}mph</h3>
             <h3 v-if="this.currentLocationWeather != null" class="wind-speed"> cloud cover: {{ (this.currentLocationWeather.current.clouds)  }}%</h3>
@@ -41,7 +44,7 @@
                     <img src="../assets/sunset.png" class="grid-image"> {{ this.convertTimeFromTimeStamp(this.currentLocationWeather.current.sunset) }}</h3>
                 </div>
         </div>
-        <div class="dates-wrapper">
+        <div v-if="this.currentLocationWeather != null" class="dates-wrapper">
         <h2 class="daily-forecast-title">Click on a date below for daily forecast:</h2>
         <ul v-if="this.currentLocationWeather != null" :refresh='refresh' class="dates-list">
             <li v-bind:class="{dateClicked: isVisible[index]}" v-for="(item, index) in this.currentLocationWeather.daily" :key="item.dt" class="dropdown-weather-text">
@@ -57,6 +60,9 @@
         </ul>
         </div>
     </div>
+    <div>
+            <a href='/'><button v-if="this.searchLocation != null" class="reset-button"><img src="../assets/homemarker2.png" class="marker-image"/>Reset weather details to current location</button></a>
+        </div>
 </div> 
 </template>
 
@@ -64,6 +70,7 @@
 
 import apiKey from "../apikey.js"
 import { eventBus } from "../main.js"
+import CubeSpin from '../../node_modules/vue-loading-spinner/src/components/Circle.vue'
 const tzlookup = require("tz-lookup")
 
 export default {
@@ -80,6 +87,10 @@ export default {
             searchLocation: null,
             selectedLocation: "Other locations for this search:"
         }
+    },
+
+    components: {
+      "cube-spin": CubeSpin
     },
 
     methods: {
@@ -194,7 +205,7 @@ font-family: 'Pridi', serif; */
     background-color: #f6f7ff;
     min-height: 100vh;
     margin: 0;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
 }
 .title-container {
     border: solid 4px #8860d0;
@@ -207,17 +218,39 @@ font-family: 'Pridi', serif; */
 }
 .location-title {
     font-family: 'Pridi', serif;
-    font-size: 30px;
+    font-size: 24px;
     margin: 0px;
-    padding: 5px 5px;
+    padding: 0px 5px;
     color: #6b00a8;
 }
 .location-detail {
     font-family: 'Pridi', serif;
-    font-size: 24px;
-    padding: 5px 5px;
+    font-size: 20px;
+    padding: 0px 5px;
     color: #6b00a8;
     margin: 0;
+}
+.marker-image {
+    vertical-align: middle;
+    padding-bottom: 3px;
+    height: 35px;
+}
+.reset-button {
+    margin-top: 15px;
+    font-family: 'Grandstander', cursive;
+    font-size: 18px;
+    background-color:#6b00a8;
+    color: white;
+    border: solid 1px white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+}
+.reset-button:hover {
+    color:#6b00a8;
+    background-color: white;
+    border: solid 1px #8860d0;
 }
 .weather-wrapper {
     display: grid;
@@ -232,8 +265,6 @@ font-family: 'Pridi', serif; */
     border-radius: 20px;
     max-width: 350px;
     margin-top: 20px;
-    /* margin-left: auto;
-    margin-right: auto;  */
     background-color: #b9e9fb; 
     padding: 10px 20px;
     height: 565px;
@@ -244,17 +275,15 @@ font-family: 'Pridi', serif; */
     border-radius: 20px;
     max-width: 350px;
     margin-top: 20px;
-    /* margin-left: auto;
-    margin-right: auto;  */
     background-color: #b9e9fb; 
     padding: 10px 20px;
-    min-height: 560px;
+    height: 565px;
     justify-self: right;
     margin-right: 10px;
 
 }
 .current-weather{
-    font-size: 26px;
+    font-size: 22px;
     font-family: 'Grandstander', cursive;
     margin: 0px;
     margin-top: 10px;
@@ -278,8 +307,8 @@ font-family: 'Pridi', serif; */
 }
 .temperature {
     font-family: 'Amatic SC', cursive;
-    color: #5f5f5f;
-    font-size: 50px;
+    color: #6b00a8;
+    font-size: 70px;
     padding: 25px 0;
     background-color: #ffffff;
     border: solid 5px #8860d0;
@@ -290,7 +319,7 @@ font-family: 'Pridi', serif; */
 .sun-rise { 
     font-family: 'Amatic SC', cursive;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 32px;
     margin: 0px;
     color: black;
 }
@@ -310,14 +339,12 @@ select {
   border-radius: 8px;
   background-color: #fff;
 }
-@media screen and (max-width: 450px) {
-  .image-fit {
-      height: 140px;
-  }
-  .temperature {
-    font-size: 45px;
-    margin: 10px;
-}
+
+.loading-icon {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: fit-content;
 }
 
 .wind-speed {
@@ -349,15 +376,9 @@ select {
     padding: 0px;
 }
 
-@media screen and (max-width: 950px) {
-  /* .dates-list {
-    display: block;
-  } */
-}
-
 .daily-forecast-title {
     font-family: 'Grandstander', cursive;
-    font-size: 26px;
+    font-size: 22px;
     margin: 0px;
     color: #6b00a8;
     margin-top: 10px;
@@ -397,14 +418,40 @@ select {
     margin-top: 15px;
 
 }
-
-
-
-
-
 .grid-image {
     height: 125px;
-    /* object-fit: fill; */
+}
+
+/* RESPONSIVE RULES: */
+
+@media screen and (max-width: 780px) {
+    .weather-wrapper {
+        grid-template-columns: 1fr;
+        margin-bottom: 15px;
+    }
+    .weather-container {
+        justify-self: center;
+        margin-right: 0px;
+        height: auto;
+
+    }
+    .dates-wrapper {
+        justify-self: center;
+        height: 475px;
+}
+  /* .dates-list {
+    display: block;
+  } */
+}
+
+@media screen and (max-width: 450px) {
+  .image-fit {
+      height: 140px;
+  }
+  .temperature {
+    font-size: 45px;
+    margin: 10px;
+}
 }
 
 @media screen and (max-width: 365px) {

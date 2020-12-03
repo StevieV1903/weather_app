@@ -50,6 +50,7 @@ body{
   margin: 0;
   font-family: 'Pridi', serif;
   color: #6b00a8;
+  font-size: 32px;
   
 }
 #app > h3 {
@@ -72,6 +73,20 @@ body{
   margin-right: 10px;
   border: solid 4px #8860d0; 
   border-radius: 20px;
+}
+
+/* RESPONSIVE RULES:  */
+
+@media screen and (max-width: 450px) {
+  .title-wrapper {
+    grid-template-columns: 20% 80%;
+}
+  .title {
+    font-size: 24px;
+}
+  .title-image {
+    width: 50px;
+  }
 }
 
 </style>
