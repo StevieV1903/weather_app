@@ -21,6 +21,6 @@ npm run serve
 
 ### Screenshots
 
-<img width="500" alt="Screenshot 2021-05-08 at 13 41 03" src="https://user-images.githubusercontent.com/56826534/117539610-61f88700-b003-11eb-885b-c97de74fa634.png">
-<img width="500" alt="Screenshot 2021-05-08 at 13 42 05" src="https://user-images.githubusercontent.com/56826534/117539619-6755d180-b003-11eb-8d30-d5054f24f358.png">
+<img width="400" alt="Screenshot 2021-05-08 at 13 41 03" src="https://user-images.githubusercontent.com/56826534/117539610-61f88700-b003-11eb-885b-c97de74fa634.png">
+<img width="400" alt="Screenshot 2021-05-08 at 13 42 05" src="https://user-images.githubusercontent.com/56826534/117539619-6755d180-b003-11eb-8d30-d5054f24f358.png">
 
