@@ -1,4 +1,8 @@
-# weather-app
+# [World-Wide-Weather](https://world-wide-weather-cjs.herokuapp.com/)
+
+Created by Steve Vance, Chris Fraser and James Fraser.
+ 
+** Please ensure that you enable location services in your browser for this app to work **
 
 ## Project setup
 ```
@@ -10,10 +14,4 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
